@@ -7,15 +7,22 @@ export const signup = async(req, res) =>{
         const {fullName, gender, username, password, confirmPassword} = req.body;
         if(password != confirmPassword) return res.status(400).json({error : "Password don't match"});
 
-        const findUser = await User.findOne({username});
+        let findUser;
+        try{ 
+            findUser = await User.findOne({username});
+        }
+        catch(e){
+            return res.status(500).json({error : "Check Your Internet Connection"});
+        }
+        
         if(findUser) return res.status(400).json({error : "Username already exists"});
+        
 
         // hash
         const salt = await bcryptjs.genSalt(10);
         const hashPassword = await bcryptjs.hash(password,salt);
-
-        const boyProfilePic = `https://avatar-placeholder.iran.liara.run/boy?username=${username}`;
-        const girlProfilePic = `https://avatar-placeholder.iran.liara.run/girl?username=${username}`;
+        const boyProfilePic = ` https://avatar-placeholder.iran.liara.run/boy?username=${username}`;
+        const girlProfilePic = ` https://avatar-placeholder.iran.liara.run/girl?username=${username}`;
 
         const newUser = new User({
             fullName,
@@ -55,8 +62,8 @@ export const login = async(req, res) =>{
             id : findUser.id,
             username : findUser.username,
         }
-        generateToken(payload,res);
-        return res.status(201).json({ findUser })
+        generateToken(payload, res);
+        return res.status(201).json( findUser );
     }
     catch(e){
         console.log("Error in login controller",e.message);
@@ -67,7 +74,7 @@ export const login = async(req, res) =>{
 export const logout = (req, res) =>{
     try{
         res.cookie("token","",{maxAge : 0});
-        res.status(200).json({ error : "loged Out Successfully"});
+        res.status(200).json({ message : "loged Out Successfully"});
     }
     catch(e){
         console.log("Error in login controller",e.message);

@@ -5,7 +5,7 @@ export const sendMessage = async(req,res) =>{
         const { message } = req.body;
         const { id } = req.params;
         const receiverId = id;
-        const senderId = req.user._id;
+        const senderId = req.user?._id;
 
         let conversation = await Conversation.findOne({
             participants : { $all : [senderId, receiverId ]},
@@ -28,7 +28,7 @@ export const sendMessage = async(req,res) =>{
         }
         
         await Promise.all([conversation.save(),newMessage.save()]);
-        return res.status(201).json({ newMessage });
+        return res.status(201).json(newMessage);
 
     }
     catch(e){
@@ -37,7 +37,7 @@ export const sendMessage = async(req,res) =>{
     }
 }
 
-export const getMessage = async(req,res) =>{
+export const getMessage = async( req, res ) =>{
     try{
         const { id : userToChatId } = req.params;
         const senderId = req.user._id;
@@ -49,7 +49,6 @@ export const getMessage = async(req,res) =>{
         if(!conversation) return res.status(200).json([]);
 
         const messages = conversation.message;
-
         res.status(200).json(messages);
     }
     catch(e){

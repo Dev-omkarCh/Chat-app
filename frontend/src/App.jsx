@@ -1,22 +1,27 @@
-import React from 'react';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
-import "bootstrap/dist/css/bootstrap.min.css";
+import Home from './pages/Home/Home';
+import Signup from './pages/signup/Signup';
+import Login from './pages/login/Login';
+import Chat from './pages/Chat/Chat';
+import NotFound from './pages/NotFound';
+import { useState } from 'react';
+import { Navigate, Route, Routes } from "react-router-dom";
+import { AuthContext } from './context/AuthContext'; 
 
 function App() {
-  return (
-    <>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="Email address"
-        className="w-10 mb-3"
-      >
-        <Form.Control type="email" placeholder="name@example.com"/>
-      </FloatingLabel>
-      
-    </>
-  )
-}
+  const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem("Chat-User")) || null);
 
-export default App
+  return (
+    <AuthContext.Provider value={{ authUser, setAuthUser }} >
+      <Routes>
+        <Route path="/" element={ <Home /> } ></Route>
+        <Route path="/signup" element={ authUser ? <Navigate to="/chat" /> : <Signup /> } ></Route>
+        <Route path="/login" element={ authUser ? <Navigate to="/chat" /> : <Login /> } ></Route>
+        <Route path="/chat" element={ authUser ? <Chat/> : <Navigate to='/login' /> } ></Route>
+        <Route path="*" element={ <NotFound /> } ></Route>
+      </Routes>
+    </AuthContext.Provider>
+  );
+};
+
+export default App;
 

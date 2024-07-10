@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.signup-form{
+    height: 100vh;
+    width: 100vw;
+    gap:10px;
+}
+/* .form-data-container{
+
+} */
+
+.select-gender-div{
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap : 20px;
+}
+.white{
+    color : white !important;
+}
