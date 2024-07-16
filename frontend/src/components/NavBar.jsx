@@ -1,72 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
 
-const NavBar = () => {
+const NavBar = ({ darkMode, setDarkMode }) => {
+
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
     return (
-        <div className="navbar bg-base-100 min-h-[10svh] relative ">
-            <div className="navbar-start">
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h7" />
-                        </svg>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li><Link>Homepage</Link></li>
-                        <li><Link to="/signup">Signup</Link></li>
-                        <li><Link to="/login">Login</Link></li>
-                    </ul>
+        <header className="bg-white dark:bg-gray-800 shadow-lg w-full">
+            <div className="max-w-7xl mx-auto py-4 px-6 flex justify-between items-center">
+            <div className="text-3xl font-bold">ChatApp</div>
+            <nav className="hidden md:block">
+                <ul className="flex space-x-4 font-semibold">
+                <li><Link className="text-accentLight">Home</Link></li>
+                <li><Link to="/about" className="hover:text-accentLight">About</Link></li>
+                <li><Link to="#contact" className="hover:text-accentLight">Contact</Link></li>
+                </ul>
+            </nav>
+            <div className="flex items-center">
+                <button onClick={toggleDarkMode} className="mr-4 focus:outline-none">
+                {darkMode ? <FiSun className="w-6 h-6" /> : <FiMoon className="w-6 h-6" />}
+                </button>
+                <div className="md:hidden">
+                <button onClick={toggleMenu} className="focus:outline-none">
+                    {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+                </button>
                 </div>
             </div>
-            <div className="navbar-center">
-                <a className="btn btn-ghost text-xl">MyChat</a>
             </div>
-            <div className="navbar-end">
-                <button className="btn btn-ghost btn-circle">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-                <button className="btn btn-ghost btn-circle">
-                    <div className="indicator">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                        <span className="badge badge-xs badge-primary indicator-item"></span>
-                    </div>
-                </button>
-            </div>
-        </div>
-    );
-};
+            {isOpen && (
+            <nav className="md:hidden">
+                <ul className="flex flex-col items-center space-y-2 py-4 font-bold">
+                <li><a className="text-accentLight">Home</a></li>
+                <li><Link Link to="/about" className="hover:text-accentLight">About</Link></li>
+                <li><Link href="#contact" className="hover:text-accentLight">Contact</Link></li>
+                </ul>
+            </nav>
+            )}
+        </header>
+    )
+}
 
-export default NavBar;
+export default NavBar

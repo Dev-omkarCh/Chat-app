@@ -2,11 +2,13 @@ import ChatBubble from '../ChatBubble';
 import useGetMessages from '@/hooks/useGetMessages';
 import ChatSkeleton from '../ChatSkeleton';
 import { useEffect, useRef } from 'react';
+import useListenMessages from '@/hooks/useListenMessages';
 
-const Messages = () => {
+const Messages = ({ mobile = false }) => {
 
-  const { messages, loading } = useGetMessages();
+  const { loading, messages } = useGetMessages();
   const lastMessage = useRef();
+  useListenMessages();
 
   useEffect(()=>{
     setTimeout(()=>{
@@ -16,7 +18,7 @@ const Messages = () => {
 
   const NoMessageSend = () =>{
       return (
-        <div className='h-[80%] w-full pl-10 pr-10 pt-4 flex justify-center items-center text-gray-400 '>
+        <div className={`h-[80%] pl-10 pr-10 w-full pt-4 flex justify-center items-center text-gray-400 `}>
             Send a Message to Start Conversation
         </div>
       )
@@ -26,7 +28,7 @@ const Messages = () => {
 
   return (
     loading ? <ChatSkeleton /> : 
-    <div className='h-[80%] w-full pl-10 pr-10 pt-4 overflow-auto'>
+    <div className={`h-[80%] w-full ${mobile ? "pl-6 pr-6" : "pl-10 pr-10"} pt-4 overflow-auto`}>
       {
         messages?.map(( message )=>{
             return <div key={message._id} ref={lastMessage}>

@@ -2,19 +2,21 @@
   @tailwind components;
   @tailwind utilities;
 
-  ::-webkit-scrollbar{
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track{
-    background-color: black;
-  }
-  ::-webkit-scrollbar-thumb{
-    background-color: #29364d;
-    border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb:hover{
-    background-color: #364766;
-  }
+ @media (min-width : 600px ) {
+    ::-webkit-scrollbar{
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track{
+      background-color: black;
+    }
+    ::-webkit-scrollbar-thumb{
+      background-color: #29364d;
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      background-color: #364766;
+    }
+ }
 
   .avatar.online:before {
     background-color: rgb(82, 255, 82);
@@ -23,6 +25,44 @@
     height: 25%;
     top: 2%;
     right: 1%;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-out;
+}
+
+.animation-delay-2 {
+  animation-delay: 0.5s;
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+/* Dark mode settings */
+:root {
+  --bg-primary: #ffffff;
+  --text-primary: #1a202c;
+  --bg-secondary: #edf2f7;
+  --text-secondary: #4a5568;
+}
+
+.dark:root {
+  --bg-primary: #1a202c;
+  --text-primary: #f7fafc;
+  --bg-secondary: #2d3748;
+  --text-secondary: #cbd5e0;
 }
 
 
@@ -87,14 +127,5 @@
       --border: 217.2 32.6% 17.5%;
       --input: 217.2 32.6% 17.5%;
       --ring: 212.7 26.8% 83.9%;
-    }
-  }
-
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply dark bg-background text-foreground;
     }
   }

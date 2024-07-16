@@ -4,8 +4,9 @@ import generateToken from "../utils/generateToken.js";
 
 export const signup = async(req, res) =>{
     try{
-        const {fullName, gender, username, password, confirmPassword} = req.body;
+        const {fullName, gender, username, password, confirmPassword, email } = req.body;
         if(password != confirmPassword) return res.status(400).json({error : "Password don't match"});
+        if(!email.includes("@")) return res.status(400).json({error : "Invalid email"});
 
         let findUser;
         try{ 
@@ -21,8 +22,8 @@ export const signup = async(req, res) =>{
         // hash
         const salt = await bcryptjs.genSalt(10);
         const hashPassword = await bcryptjs.hash(password,salt);
-        const boyProfilePic = ` https://avatar-placeholder.iran.liara.run/boy?username=${username}`;
-        const girlProfilePic = ` https://avatar-placeholder.iran.liara.run/girl?username=${username}`;
+        const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+        const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
         const newUser = new User({
             fullName,
@@ -30,8 +31,10 @@ export const signup = async(req, res) =>{
             password : hashPassword,
             confirmPassword,
             gender : gender.toLowerCase(),
-            profilePic : gender.toLowerCase() === "male" ? boyProfilePic : girlProfilePic
+            profilePic : gender.toLowerCase() === "male" ? boyProfilePic : girlProfilePic,
+            email
         });
+
 
         if(newUser) { 
             await newUser.save();
@@ -40,13 +43,18 @@ export const signup = async(req, res) =>{
                 username : newUser.username,
             }
             generateToken(payload,res);
-            return res.status(200).json({ newUser }); 
+            const authUser = newUser.toObject();
+            delete authUser.password;
+            return res.status(200).json(authUser); 
         }
         else return res.status(400).json({ error : "Invalid User data" });
 
     }
     catch(e){
         console.log("Error in signup controller",e.message);
+        if(e.code === 11000){
+            return res.status(400).json({error : "Email is Already used"});
+        }
         return res.status(500).json({error : "Internal Server Error "});
     }
 };
@@ -63,7 +71,9 @@ export const login = async(req, res) =>{
             username : findUser.username,
         }
         generateToken(payload, res);
-        return res.status(201).json( findUser );
+        const authUser = findUser.toObject();
+        delete authUser.password;
+        return res.status(201).json( authUser );
     }
     catch(e){
         console.log("Error in login controller",e.message);

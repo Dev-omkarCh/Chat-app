@@ -1,29 +1,28 @@
 import { useState } from "react";
 import {toast} from "react-hot-toast";
-import { useAuthContext } from "../context/AuthContext";
+import useAuth from "@/zustand/useAuth";
 
 const useSignup = () =>{
     const [ loading,setloading ] = useState(false);
-    const { setAuthUser } = useAuthContext();
+    // const { setAuthUser } = useAuthContext();
+    const { setAuthUser } = useAuth();
 
-    const signup = async({ fullName, username, password, confirmPassword, gender }) =>{
+    const signup = async( fullname, username, password, confirmPassword, gender, email ) =>{
         
+        setloading(true);
         // * Validation 
-        const success = validation({fullName,username,password,confirmPassword,gender});
-        if(!success) return;
+        const success = validation( fullname, username, password, confirmPassword ,gender, email);
+        if(!success) return setloading(false);
 
         // * Signup process Begin
-        setloading(true);
         try{
             const res = await fetch(`/api/auth/signup`,{
                 method : "POST",
                 headers : { "Content-Type": "application/json"},
-                body : JSON.stringify({ fullName, username, password, confirmPassword,gender})
+                body : JSON.stringify({ fullName : fullname, username, password, confirmPassword, gender, email})
             });
             const data = await res.json();
-            if(data.error){
-                throw new Error(data.error);
-            }
+            if(data.error) return toast.error(data.error);
             // localStorage
             localStorage.setItem("Chat-User",JSON.stringify(data));
             //context
@@ -39,10 +38,14 @@ const useSignup = () =>{
     return { loading, signup };
 };
 
-function validation({fullName,username,password,confirmPassword,gender}){
-    if(!fullName || !username || !password || !confirmPassword || !gender){
+function validation( fullname, username, password, confirmPassword, gender, email){
+    if(!fullname || !username || !password || !confirmPassword || !gender || !email){
         toast.error("Please fill in all Fields");
         return;
+    }
+    if(!email.includes("@")){
+        toast.error("invalid email");
+        return false;
     }
     if(password !== confirmPassword){
         toast.error("Password do not match");

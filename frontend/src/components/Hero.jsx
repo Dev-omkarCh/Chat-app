@@ -1,23 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-const Hero = () => {
+const Hero = ({ darkMode }) => {
   return (
-    <div className="hero bg-base-200 w-full min-h-[90svh]">
-        <div className="hero-content flex-col lg:flex-row gap-[40px]">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-            className="max-w-sm rounded-lg shadow-2xl w-[300px]" />
-          <div className='w-[50%] p-3'>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.
-            </p>
-            <Link to="/signup" className="btn btn-primary">Get Started</Link>
+    <main id="home" className="w-full">
+        <div className="relative">
+          <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-r from-gray-700 via-gray-900 to-black' : 'bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600'} opacity-75`}></div>
+          <div className="relative max-w-7xl mx-auto py-20 px-6 text-center">
+                <h2 className="text-5xl font-extrabold mb-4 animate-fadeInUp">Welcome to ChatApp</h2>
+                <p className="text-lg mb-8 animate-fadeInUp animation-delay-2">Connect with your friends and family instantly.</p>
+                <button className="px-8 py-3 bg-white text-gray-800 rounded-full font-semibold hover:bg-accent 
+                hover:text-white transition duration-300"><Link to={"/signup"}>Get Started</Link></button>
           </div>
         </div>
-      </div>
+      </main>
   )
 }
 
