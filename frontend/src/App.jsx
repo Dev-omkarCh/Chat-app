@@ -16,8 +16,7 @@ function App() {
         <Route path="/" element={ <Home /> } ></Route>
         <Route path="/signup" element={ authUser ? <Navigate to="/chat" /> : <Signup /> } ></Route>
         <Route path="/login" element={ authUser ? <Navigate to="/chat" /> : <Login /> } ></Route>
-        {/* <Route path="/chat" element={ authUser ? <Chat/> : <Navigate to='/login' /> } ></Route> */}
-        <Route path="/chat" element={ <Chat/> } ></Route>
+        <Route path="/chat" element={ authUser ? <Chat/> : <Navigate to='/login' /> } ></Route>
         <Route path="/about" element={ <AboutPage /> } ></Route>
         <Route path="*" element={ <NotFound /> } ></Route>
       </Routes>

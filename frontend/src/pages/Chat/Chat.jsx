@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import MessageBox from '../../components/messageContainer/MessageBox';
-import "../Chat/Css/chat.css";
 import { Toaster } from 'react-hot-toast';
 import { useSocketContext } from '@/context/SocketContext';
-import NewMessage from '@/components/NewMessage';
 import useConversation from '@/zustand/useConversation';
 
 const Chat = () => {

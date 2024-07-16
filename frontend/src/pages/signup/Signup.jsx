@@ -3,7 +3,7 @@ import useSignup from '@/hooks/useSignup';
 import useAuth from '@/zustand/useAuth';
 import useTheme from '@/zustand/useTheme';
 import React, { useState, useEffect } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
