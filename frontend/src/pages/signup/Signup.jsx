@@ -1,3 +1,4 @@
+import NavigationNavbar from '@/components/NavigationNavbar';
 import useSendEmail from '@/hooks/useSendEmail';
 import useSignup from '@/hooks/useSignup';
 import useAuth from '@/zustand/useAuth';
@@ -49,8 +50,9 @@ function Signup() {
   }, [darkMode]);
 
   return (
-    <div className={`flex items-center justify-center min-h-screen w-full ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} p-4 sm:p-6 lg:p-8`}>
+    <div className={`flex items-center justify-center min-h-screen w-full ${darkMode ? 'bg-gray-950 text-white' : 'bg-gray-100 text-gray-900'} p-4 sm:p-6 lg:p-8`}>
       <Toaster />
+      <NavigationNavbar />
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 w-full max-w-sm sm:max-w-md md:max-w-lg">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Signup for ChatApp</h2>

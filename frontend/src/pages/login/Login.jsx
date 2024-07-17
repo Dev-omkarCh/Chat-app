@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import NavigationNavbar from '@/components/NavigationNavbar';
 
 function Login() {
   const [ username, setUsername ] = useState('');
@@ -29,7 +30,9 @@ function Login() {
   }, [darkMode]);
 
   return (
-    <div className={`flex items-center justify-center min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} p-4 sm:p-6 lg:p-8 w-full`}>
+    <div className={`flex items-center justify-center min-h-screen 
+    ${darkMode ? 'bg-gray-950 text-white' : 'bg-gray-100 text-gray-900'} p-4 sm:p-6 lg:p-8 w-full relative flex flex-col`}>
+      <NavigationNavbar />
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 w-full max-w-sm sm:max-w-md md:max-w-lg">
       <Toaster />
         <div className="flex justify-between items-center mb-6">

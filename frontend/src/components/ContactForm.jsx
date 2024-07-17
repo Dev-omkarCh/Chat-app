@@ -23,7 +23,7 @@ const ContactForm = ({ darkMode }) => {
   };
 
   return (
-    <div className="mt-8 w-[70%]">
+    <div className="mt-8 w-[80%]" id='contact'>
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Contact Us</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="relative">

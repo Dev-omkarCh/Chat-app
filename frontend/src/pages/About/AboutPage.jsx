@@ -55,7 +55,7 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} w-full h-full overflow-x-hidden`}>
+    <div className={`${darkMode ? 'dark' : ''} w-full h-full overflow-x-hidden scroll-smooth`}>
       <Toaster />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
         <div className=" bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 relative flex justify-center items-center flex-col">
