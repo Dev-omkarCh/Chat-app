@@ -36,7 +36,7 @@ function Login() {
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 w-full max-w-sm sm:max-w-md md:max-w-lg">
       <Toaster />
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Login to ChatApp</h2>
+          <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Login</h2>
           <button onClick={toggleDarkMode} className="focus:outline-none">
             {darkMode ? <FiSun className="w-6 h-6 text-gray-500 dark:text-gray-300" /> : <FiMoon className="w-6 h-6 text-gray-500 dark:text-gray-300" />}
           </button>

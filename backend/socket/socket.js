@@ -23,6 +23,11 @@ io.on("connection",(socket) =>{
     const userId = socket.handshake.query?.userId;
     if(userId != "undefined") userSocketMap[userId] = socket.id;
     io.emit("getOnlineUsers",Object.keys(userSocketMap));
+
+    socket.on("typing", ( receiverId, isTyping) => {
+        const user = userSocketMap[receiverId];
+        socket.to(user).emit("isTyping", isTyping);
+    })
     
     socket.on("disconnect",()=>{
         

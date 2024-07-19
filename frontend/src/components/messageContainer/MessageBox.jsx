@@ -6,6 +6,9 @@ import Avatar from '../Avatar';
 import useConversation from '@/zustand/useConversation';
 import useAuth from '@/zustand/useAuth';
 import { IoMdArrowBack } from "react-icons/io";
+import { useSocketContext } from '@/context/SocketContext';
+import useClearChat from '@/hooks/useClearChat';
+import DeleteMessage from './DeleteMessage';
 
 const NoChatSelected = ({ mobile }) => {
 
@@ -23,12 +26,18 @@ const NoChatSelected = ({ mobile }) => {
 const MessageBox = ({ mobile = false }) => {
 
     const { selectedConversation, setSelectedConversation } = useConversation();
+    const { onlineUser } = useSocketContext();
+    const isOnline = onlineUser.includes(selectedConversation?._id);
+    const {loading, deleteChat} = useClearChat();
+    const {setMessages} = useConversation();
 
     useEffect(()=>{
 
       // clean up on unmount
       return () => setSelectedConversation(null);
     },[]);
+
+    useEffect(()=>{},[isOnline]);
 
     const goBack = () =>{
         setSelectedConversation(null);
@@ -37,10 +46,11 @@ const MessageBox = ({ mobile = false }) => {
     if(selectedConversation) {
       return (
         <div className={`h-full ${mobile ? "w-full" : "w-[80%]"} relative bg-gray-900`}>
-            <div className="flex justify-start items-center border-b-[1px] border-b-gray-500 h-[10%] w-full gap-5 pl-6">
+            <div className="flex justify-start items-center border-b-[1px] border-b-gray-500 h-[10%] w-full gap-5 pl-6 relative">
               <button className='text-[20px]' onClick={goBack}><IoMdArrowBack /></button>
-              <Avatar profilePic={selectedConversation.profilePic} />
+              <Avatar onlineStatus={isOnline}  profilePic={selectedConversation.profilePic} />
               <span>{selectedConversation.username}</span>
+              <DeleteMessage />
             </div>
             <Messages mobile={mobile}  />
             <MessageInput mobile={mobile} />

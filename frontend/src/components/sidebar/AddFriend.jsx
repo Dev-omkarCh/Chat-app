@@ -27,6 +27,7 @@ export function AddFriend({ profilePic, username, id }) {
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
+        if(value.length < 23) return toast.error("ID Not Found");
         await addFriend(value);
         toast.success("Friend Added");
         setValue("");
@@ -59,6 +60,7 @@ export function AddFriend({ profilePic, username, id }) {
           <div className="grid grid-cols-4 items-center gap-4">
             <Input
               id="name"
+              placeholder="Enter Friends ID..."
               value={value}
               onChange={e => setValue(e.target.value)}
               className="col-span-3"

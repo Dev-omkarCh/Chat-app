@@ -64,3 +64,21 @@ export const getMessage = async( req, res ) =>{
         res.status(500).json({ error : "Internal server error" });
     }
 };
+
+
+export const clearChat = async( req, res ) =>{
+    try{
+        const { id } = req.params;
+        const senderId = req.user._id;
+
+        await Message.deleteMany({ senderId, receiverId : id });
+        await Message.deleteMany({ senderId: id, receiverId : senderId });
+
+        res.status(202).json({ message : "Chat Deleted"});
+    }
+    catch(e){
+        console.log("Error in getMessage Controller : ",e.message);
+        res.status(500).json({ error : "Internal server error" });
+    }
+};
+
