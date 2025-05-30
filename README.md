@@ -96,7 +96,7 @@ This is a full-stack chat application designed to offer a real-time messaging ex
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/chat-app.git
+git clone https://github.com/Dev-omkarCh/Chat-app.git
 cd chat-app
 ```
 ### Backend setup
